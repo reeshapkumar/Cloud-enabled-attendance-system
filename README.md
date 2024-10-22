@@ -33,7 +33,8 @@ cloud-attendance-system/
 **Step 1: Set Up the Backend**
 
 **A. Create the Backend Directory**
-Create the backend directory and navigate to it:
+
+**Create the backend directory and navigate to it:**
 
 ``bash
 Copy code
@@ -47,8 +48,8 @@ cd backend
 Copy code
 npm init -y
 ``
-**Install necessary dependencies:**
 
+**Install necessary dependencies:**
 
 ``bash
 Copy code
