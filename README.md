@@ -83,7 +83,6 @@ app.listen(PORT, () => {
 
 ``javascript
 Copy code
-// backend/models/Attendance.js
 const mongoose = require('mongoose');
 
 const attendanceSchema = new mongoose.Schema({
@@ -99,12 +98,9 @@ module.exports = mongoose.model('Attendance', attendanceSchema);
 
 ``javascript
 Copy code
-// backend/routes/attendance.js
 const express = require('express');
 const router = express.Router();
 const Attendance = require('../models/Attendance');
-
-// Get all attendance records
 router.get('/', async (req, res) => {
     try {
         const attendanceRecords = await Attendance.find();
@@ -114,7 +110,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Create a new attendance record
 router.post('/', async (req, res) => {
     const attendance = new Attendance({
         studentName: req.body.studentName,
@@ -136,7 +131,7 @@ module.exports = router;
 
 ``bash
 Copy code
-MONGO_URI=mongodb://mongo:27017/attendance
+MONGO_URI=mongodb:
 ``
 
 **B. Create the Dockerfile for Backend**
@@ -186,7 +181,6 @@ npm install axios
 
 ``javascript
 Copy code
-// frontend/src/components/AttendanceForm.js
 import React, { useState } from 'react';
 import axios from 'axios';
 
@@ -223,7 +217,6 @@ export default AttendanceForm;
 
 ``javascript
 Copy code
-// frontend/src/components/AttendanceList.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -260,7 +253,6 @@ export default AttendanceList;
 
 ``javascript
 Copy code
-// frontend/src/App.js
 import React from 'react';
 import AttendanceForm from './components/AttendanceForm';
 import AttendanceList from './components/AttendanceList';
