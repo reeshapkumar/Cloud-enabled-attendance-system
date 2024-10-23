@@ -6,8 +6,7 @@ Here’s a step-by-step guide, including code snippets.
 
 **Project Structure**
 
-``go
-Copy code
+```go
 cloud-attendance-system/
 ├── backend/
 │   ├── Dockerfile
@@ -18,6 +17,8 @@ cloud-attendance-system/
 │   ├── routes/
 │   │   └── attendance.js
 │   └── .env
+```
+```
 ├── frontend/
 │   ├── Dockerfile
 │   ├── package.json
@@ -28,7 +29,7 @@ cloud-attendance-system/
 │   │   ├── App.js
 │   │   └── index.js
 └── docker-compose.yml
-``
+```
 
 **Step 1: Set Up the Backend**
 
@@ -36,30 +37,26 @@ cloud-attendance-system/
 
 **Create the backend directory and navigate to it:**
 
-``bash
-Copy code
+```bash
 mkdir backend
 cd backend
-``
+```
 
 **Initialize a new Node.js project:**
 
-``bash
-Copy code
+```bash
 npm init -y
-``
+```
 
 **Install necessary dependencies:**
 
-``bash
-Copy code
+```bash
 npm install express mongoose dotenv cors body-parser
-``
+```
 
 **Create the server.js file:**
 
-``javascript
-Copy code
+```javascript
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -77,12 +74,11 @@ app.use('/api/attendance', attendanceRoutes);
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-``
+```
 
 **Create the MongoDB model for attendance:**
 
-``javascript
-Copy code
+```javascript
 const mongoose = require('mongoose');
 
 const attendanceSchema = new mongoose.Schema({
@@ -92,12 +88,11 @@ const attendanceSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Attendance', attendanceSchema);
-``
+```
 
 **Create the attendance routes:**
 
-``javascript
-Copy code
+```javascript
 const express = require('express');
 const router = express.Router();
 const Attendance = require('../models/Attendance');
@@ -125,19 +120,17 @@ router.post('/', async (req, res) => {
 });
 
 module.exports = router;
-``
+```
 
 **Create a .env file to store environment variables:**
 
-``bash
-Copy code
+```bash
 MONGO_URI=mongodb:
-``
+```
 
 **B. Create the Dockerfile for Backend**
 
-``dockerfile
-Copy code
+```dockerfile
 FROM node:14
 
 WORKDIR /usr/src/app
@@ -150,37 +143,33 @@ COPY . .
 EXPOSE 5000
 
 CMD ["node", "server.js"]
-``
+```
 
 **Step 2: Set Up the Frontend**
 
 **A. Create the Frontend Directory**
 Create the frontend directory and navigate to it:
 
-``bash
-Copy code
+```bash
 mkdir ../frontend
 cd ../frontend
-``
+```
 
 **Create a new React app:**
 
-``bash
-Copy code
+```bash
 npx create-react-app .
-``
+```
 
 **Install Axios for API calls:**
 
-``bash
-Copy code
+```bash
 npm install axios
-``
+```
 
 **Create AttendanceForm and AttendanceList components:**
 
-``javascript
-Copy code
+```javascript
 import React, { useState } from 'react';
 import axios from 'axios';
 
@@ -213,9 +202,9 @@ const AttendanceForm = () => {
 };
 
 export default AttendanceForm;
-``
+```
 
-``javascript
+```javascript
 Copy code
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -247,12 +236,11 @@ const AttendanceList = () => {
 };
 
 export default AttendanceList;
-``
+```
 
 **Modify the App.js file to include the form and list components:**
 
-``javascript
-Copy code
+```javascript
 import React from 'react';
 import AttendanceForm from './components/AttendanceForm';
 import AttendanceList from './components/AttendanceList';
@@ -268,12 +256,11 @@ function App() {
 }
 
 export default App;
-``
+```
 
 **B. Create the Dockerfile for Frontend**
 
-``dockerfile
-Copy code
+```dockerfile
 FROM node:14 as build
 
 WORKDIR /app
@@ -287,14 +274,13 @@ FROM nginx:alpine
 COPY --from=build /app/build /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
-``
+```
 
 **Step 3: Set Up Docker Compose**
 
 **A. Create the docker-compose.yml file**
 
-``yaml
-Copy code
+```yaml
 version: '3.8'
 
 services:
@@ -323,27 +309,25 @@ services:
 
 volumes:
   mongo-data:
-  ``
+```
   
 **Step 4: Running the Application**
 
 **Navigate to the root of your project directory (where docker-compose.yml is located):**
 
-``bash
-Copy code
+```bash
 cd cloud-attendance-system
 Run Docker Compose:
 ``
 
-``bash
-Copy code
+```bash
 docker-compose up --build
-``
+```
 
 **Access the application:**
 
-``Frontend: http://localhost:3000
-``
+```Frontend: http://localhost:3000
+```
 
 **Step 5: Testing the Application**
 
@@ -356,39 +340,34 @@ To deploy your application to the cloud, you can use services like Heroku, AWS E
 
 **Install the Heroku CLI and log in:**
 
-``bash
-Copy code
+```bash
 heroku login
-``
+```
 
 **Create a new Heroku app:**
 
-``bash
-Copy code
+```bash
 heroku create my-attendance-system
-``
+```
 
 **Push the code to Heroku (ensure your Dockerfile is configured correctly):**
 
-``bash
-Copy code
+```bash
 heroku container:push web
 heroku container:release web
-``
+```
 
 **Set environment variables on Heroku:**
 
-``bash
-Copy code
+```bash
 heroku config:set MONGO_URI=<your-mongo-uri>
-``
+```
 
 **Open your app:**
 
-``bash
-Copy code
+```bash
 heroku open
-``
+```
 
 **Conclusion**
 
